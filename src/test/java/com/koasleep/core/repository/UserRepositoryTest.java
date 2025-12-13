@@ -36,6 +36,6 @@ public class UserRepositoryTest {
 
         assertThat(foundUser).isPresent();
         assertThat(foundUser.get().getFullName()).isEqualTo("Test Engineer");
-        assertThat(foundUser.get().getCreatedAt()).isNotNull(); // Verify @PrePersist worked
+        assertThat(foundUser.get().getCreatedAt()).isNotNull();
     }
 }
