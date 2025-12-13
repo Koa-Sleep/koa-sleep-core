@@ -83,6 +83,26 @@ public class User {
         }
     }
 
+    public void addSkinTemperature(SkinTemperature skinTemperature) {
+        this.skinTemperatures.add(skinTemperature);
+        skinTemperature.setUser(this);
+    }
+
+    public void addHeartRateVariability(HeartRateVariability hrv) {
+        this.heartRateVariabilities.add(hrv);
+        hrv.setUser(this);
+    }
+
+    public void addSpo2Reading(Spo2Reading spo2) {
+        this.spo2Readings.add(spo2);
+        spo2.setUser(this);
+    }
+
+    public void addSmartSummary(SmartSummary summary) {
+        this.smartSummaries.add(summary);
+        summary.setUser(this);
+    }
+
     // --- LIFECYCLE ---
 
     @PrePersist
