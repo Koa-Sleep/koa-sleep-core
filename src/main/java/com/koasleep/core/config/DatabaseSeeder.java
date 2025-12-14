@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
-@Component // Comment this out to prevent this file from running
+//@Component // Comment this out to prevent this file from running
 @Profile("dev")
 public class DatabaseSeeder implements CommandLineRunner {
 
