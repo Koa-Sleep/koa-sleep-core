@@ -1,5 +1,6 @@
 package com.koasleep.core.service;
 
+import com.koasleep.core.exception.ResourceNotFoundException;
 import com.koasleep.core.model.User;
 import com.koasleep.core.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,13 @@ public class UserService {
 
     public UserResponse getUserById(UUID id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User with provided id not found"));
         return mapToResponse(user);
     }
 
     public UserResponse getUserByEmail(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User with email " + email + " not found"));
         return mapToResponse(user);
     }
 
