@@ -1,14 +1,14 @@
 package com.koasleep.core.controller;
 
+import com.koasleep.core.dto.ApiResponse;
 import com.koasleep.core.dto.UserResponse;
-import com.koasleep.core.model.User;
 import com.koasleep.core.service.UserService;
 import org.springframework.web.bind.annotation.*;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
-
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -16,7 +16,14 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public UserResponse findUserByEmail(@RequestParam String email) {
-        return userService.getUserByEmail(email);
+    public ApiResponse<UserResponse> findUserByEmail(@RequestParam String email) {
+        UserResponse user = userService.getUserByEmail(email);
+        return new ApiResponse<>("User retrieved successfully", user);
+    }
+
+    @GetMapping("/{id}")
+    public ApiResponse<UserResponse> findUserById(@PathVariable UUID id) {
+        UserResponse user = userService.getUserById(id);
+        return new ApiResponse<>("User retrieved successfully", user);
     }
 }
