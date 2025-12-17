@@ -6,6 +6,8 @@ import com.koasleep.core.service.JwtService;
 import com.koasleep.core.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,13 +32,16 @@ public class DemoController {
         UserResponse user = userService.getUserByEmail("demo@koa");
         String token = jwtService.generateToken(user.getId());
 
-        Cookie cookie = new Cookie("auth-token", token);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-        cookie.setMaxAge((int) (jwtService.getExpirationTime() / 1000));
-        // cookie.setSecure(true); // Uncomment when running on HTTPS/Production
+        ResponseCookie cookie = ResponseCookie.from("auth-token", token)
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(jwtService.getExpirationTime() / 1000)
+                .sameSite("Lax")
+                .build();
 
-        response.addCookie(cookie);
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
         response.sendRedirect(appProperties.getFrontendUrl() + "/home");
     }
 
